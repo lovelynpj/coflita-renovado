@@ -1,4 +1,6 @@
 import flet as ft
+from login_coflita24 import login_view
+from register_coflita24 import register_view
 from datetime import datetime, timedelta
 import smtplib
 from email.mime.text import MIMEText
@@ -615,8 +617,8 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.padding = 0
     page.spacing = 0
-    page.window_width = 1200
-    page.window_height = 800
+    page.window_width = None
+    page.window_height = None
     page.scroll = ft.ScrollMode.AUTO
     
     current_view = "home"
@@ -655,7 +657,6 @@ def main(page: ft.Page):
 
 
 
-    # Navigation bar content creation function (returns the Row content)
     def create_nav_bar_content_row():
         nav_items = [
             ft.Container(
@@ -673,6 +674,8 @@ def main(page: ft.Page):
             ft.TextButton("Servicio a la habitacion", on_click=lambda e: navigate(e, "room_service"), style=ft.ButtonStyle(color=COLOR_WHITE)),
             ft.TextButton("Comentarios", on_click=lambda e: navigate(e, "comments"), style=ft.ButtonStyle(color=COLOR_WHITE)),
             ft.TextButton("Contacto", on_click=lambda e: navigate(e, "contact"), style=ft.ButtonStyle(color=COLOR_WHITE)),
+            ft.ElevatedButton("iniciar sesion",on_click=lambda e: login_view(page),style=ft.ButtonStyle(bgcolor=COLOR_BLUE_700,color=COLOR_WHITE)),
+            ft.ElevatedButton("Registrarse",on_click=lambda e: register_view(page),style=ft.ButtonStyle(bgcolor=COLOR_AMBER_700, color=COLOR_WHITE))
         ]
         
         nav_items.append(ft.Container(width=20))

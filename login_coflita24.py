@@ -1,6 +1,6 @@
 import flet as ft
 
-def identificar(e, usu, passw, mensaje, page):
+def identificar(e, usu, passw, mensaje, page, navigate=None):
     usuario = usu.value
     contrasena = passw.value
     usuarioss = {"jorge": '123', "pepe": '123', "juan": '456'}
@@ -8,12 +8,13 @@ def identificar(e, usu, passw, mensaje, page):
     if usuario in usuarioss and usuarioss[usuario] == contrasena:
         mensaje.value = 'Acceso concedido'
         page.update()
-        on_success()
+        if navigate:
+            navigate(e, "home")
     else:
         mensaje.value = 'Acceso denegado'
         page.update()
 
-def login_view(page: ft.Page):
+def login_view(page: ft.Page, navigate=None):
     page.controls.clear()
     page.title = "inicio de sesion"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER   
@@ -22,8 +23,8 @@ def login_view(page: ft.Page):
     titulo = ft.Text("INICIO DE SESION COFLITA", size=30, weight="bold", color="black")
     usu = ft.TextField(label="Ingresar usuario", width=200)
     passw = ft.TextField(label="Ingresar contraseña", width=200)
-    button_login1 = ft.ElevatedButton(text="Aceptar", on_click=lambda e: identificar(e, usu, passw, mensaje, page, on_success))
-    button_login2 = ft.ElevatedButton(text="Cancelar", on_click=lambda e: on_success())
+    button_login1 = ft.ElevatedButton(text="Aceptar", on_click=lambda e: identificar(e, usu, passw, mensaje, page, navigate))
+    button_login2 = ft.ElevatedButton(text="Cancelar", on_click= lambda e: navigate(e, "home")if navigate else None)
     mensaje = ft.Text('')
     
 

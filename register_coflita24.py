@@ -1,18 +1,22 @@
 import flet as ft
 
-def identificar(e, usu, passw, mensaje, page):
+def identificar(e, usu, passw, mensaje, page, navigate=None):
     usuario = usu.value
     contrasena = passw.value
     usuarioss = {"jorge": '123', "pepe": '123', "juan": '456'}
 
     if usuario in usuarioss and usuarioss[usuario] == contrasena:
         mensaje.value = 'Acceso concedido'
+        page.update()    
+        if navigate:
+            navigate(e, "home")
     else:
         mensaje.value = 'Acceso denegado'
 
     page.update()
+    
 
-def register_view(page: ft.Page):
+def register_view(page: ft.Page, navigate=None):
     page.title = "registro de usuario"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER   
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
@@ -31,12 +35,11 @@ def register_view(page: ft.Page):
         else:
             mensaje.value = f"✅ Usuario {usu.value} registrado correctamente"
             page.update()
-            on_success()  # 👈 vuelve al home
             return
         page.update()
 
-    button_login1 = ft.ElevatedButton(text="Aceptar", on_click=lambda e: identificar(e, usu, passw, mensaje, page))
-    button_login2 = ft.ElevatedButton(text="Cancelar")
+    button_login1 = ft.ElevatedButton(text="Aceptar", on_click=lambda e: identificar(e, usu, passw, mensaje, page, navigate))
+    button_login2 = ft.ElevatedButton(text="Cancelar", on_click= lambda e: navigate(e, "home")if navigate else None)
     mensaje = ft.Text('')
     
 

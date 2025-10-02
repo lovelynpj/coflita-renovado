@@ -48,3 +48,4 @@ def main(page: ft.Page):
     page.add(mensaje)
 
 ft.app(target=main)
+
